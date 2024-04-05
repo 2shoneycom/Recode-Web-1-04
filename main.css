@@ -1,0 +1,95 @@
+* {
+    margin: 0px; padding: 0px;
+    box-sizing: border-box;
+}
+body {
+    display: flex; justify-content: center;
+    background: lightgray;
+}
+#main {
+    width: 1280px; height: 720px;
+    background: rgb(50, 50, 50);
+    display: flex;
+    margin: 50px auto;
+}
+
+.title_box {
+    width: 280px; height: 100%;
+    border-right: 2px solid white;
+    display: flex; flex-wrap: wrap;
+}
+.title_box .up {
+    width: 100%; height: 50%;
+    font: italic bold 30pt/50px 'Times new Roman';
+    display: flex; flex-wrap: wrap;
+    justify-content: center; align-content: center;
+}
+.title_box .down {
+    width: 100%; height: 50%; padding-bottom: 20px;
+    font: normal 10pt/16pt Verdana;
+    display: flex; flex-wrap: wrap;
+    justify-content: center; align-content: flex-end;
+}
+
+.contents_box {
+    width: 1000px; height: 100%;
+    display: flex; flex-direction: column;
+}
+.contents_box nav {
+    width: 100%; height: 120px;
+    border-bottom: 2px solid white;
+    position: relative;
+}
+nav img {
+    width: 30px;
+    position: absolute; bottom: 10px; right: 10px;
+}
+.contents_box section {
+    width: 100%; height: 600px;
+    display: flex;
+}
+section .article_box {
+    width: 250px; height: 100%;
+    opacity: 0.4;
+    background-image: url(img/back.png);
+    background-size: 0px 600px;
+    background-repeat: no-repeat;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+.article_box article {
+    width: 170px; height: 460px; margin: 70px 40px;
+    font-family: Verdana, Tahoma, sans-serif;
+    color: white;
+    display: flex; flex-direction: column;
+}
+article>div.title {
+    width: 70px; height: 50px;
+    border-bottom: 1px solid white;
+    font-size: 40px; line-height: 30px;
+    font-weight: bold;
+    flex-basis: 50px;
+}
+article>div.subtitle {
+    width: 100%; height: 70px;
+    font-size: 18px; line-height: 70px;
+    font-weight: bold;
+    flex-basis: 70px;
+}
+article>div.text {
+    font-size: 15px; line-height: 25px;
+    
+    flex-grow: 1;
+}
+article img {
+    width: 170px;
+}
+
+section .article_box:hover {
+    opacity: 1;
+    background-size: 250px 600px;
+}
+.article_box:hover img {
+    transition-duration: 0.5s;
+    transform: scale(1.3, 1.3);
+}
