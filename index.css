@@ -70,19 +70,18 @@ body {
     position: absolute;
     width: 100%; height: 100%;
     background-color: rgb(50, 50, 50);
+    transition: transform 0.5s ease;
     transform-origin: right center;
 }
 .article_box:hover {
     opacity: 1;
-    background-image: url(img/back.png);
+    background-image: url("img/back.png");
 }
 .article_box:hover .article_box_mask {
     transform: scaleX(0);
-    transition-duration: 0.5s;
 }
 .article_box:hover img {
     transform: scale(1.2);
-    transition-duration: 0.5s;
 }
 .inner_article_box {
     position: absolute;
@@ -100,6 +99,7 @@ body {
 }
 .inner_article_box img {
     transform-origin: left bottom;
+    transition-duration: 0.5s;
     display: block;
     width: 100%;
 }
