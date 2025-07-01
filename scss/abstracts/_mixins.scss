@@ -1,0 +1,105 @@
+// Utilities
+@mixin generate-display-utilities {
+  @each $d in $displays {
+    .d-#{$d} {
+      display: $d !important;
+    }
+  }
+}
+
+@mixin generate-flex-direction-utilities {
+  @each $dir in $flex-directions {
+    .flex-#{$dir} {
+      @extend .d-flex;
+      flex-direction: $dir !important;
+    }
+  }
+}
+
+@mixin generate-justify-content-utilities {
+  @each $key, $val in $justify-content-values {
+    .justify-content-#{$key} {
+      justify-content: $val !important;
+    }
+  }
+}
+
+// mixin modules
+@mixin border-right($size: normal, $color: $black) {
+  border-right: map-get($border-styles, $size) $color;
+}
+
+@mixin font($size: normal, $weight: normal, $style: normal) {
+  font-size: $size;
+  font-weight: $weight;
+  font-style: $style;
+  @content;
+}
+
+// Specific mixins
+@mixin base-dimensions {
+  width: $base-width;
+  height: $base-height;
+}
+
+@mixin base-bg {
+  background-color: $base-bg-color;
+}
+
+@mixin title-box-dimensions {
+  width: $title-box-width;
+  height: $title-box-height;
+}
+
+@mixin title-up-box-dimensions {
+  width: $title-up-box-width;
+  height: $title-up-box-height;
+}
+
+// Combinators 
+@mixin generate-base {
+  #base {
+    @include base-dimensions;
+    @include base-bg;
+    @extend .d-flex;
+  }
+}
+
+@mixin generate-title_box {
+  .title_box {
+    @include title-box-dimensions;
+    @extend .flex-column;
+    @include border-right(normal, lightgray);
+
+    @include generate-title_up_box;
+  }
+}
+
+@mixin generate-title_up_box {
+  .title_up_box {
+    @include title-up-box-dimensions;
+
+    @include font(large, bold, italic) {
+      line-height: map-get($line-heights, title);
+      color: $light-gray;
+    }
+
+    @extend .flex-column;
+
+    p {
+      font-family: $font-title;
+      text-align: $center-align;
+    }
+  }
+}
+
+@mixin generate-title_down_box {
+  .title_down_box {
+    width: $title-box-width;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 10pt;
+    line-height: 16px;
+    color: lightgray;
+  }
+}

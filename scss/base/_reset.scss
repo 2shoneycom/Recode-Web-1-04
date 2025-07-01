@@ -1,0 +1,10 @@
+@import "../abstracts/variables";
+
+*,
+*::before,
+*::after {
+  margin: $zero;
+  padding: $zero;
+  box-sizing: border-box;
+  font-family: $font-default;
+}

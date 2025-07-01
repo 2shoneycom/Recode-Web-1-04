@@ -1,0 +1,92 @@
+// Numbers
+$zero: 0 !default;
+
+// Size Configuration
+$px-0: 0px;
+$px-1: 1px;
+$px-2: 2px;
+
+$rel-size: (
+  "0%": 0%,
+  "25%": 25%,
+  "50%": 50%,
+  "75%": 75%,
+  "100%": 100%
+);
+
+// Colors
+$black: #000000;
+$light-gray: #d3d3d3;
+
+// Spaces
+.m-0 { margin: 0px }
+
+// Lines
+$line-types: (
+  solid: solid,
+);
+
+// Fonts
+$font-default: Verdana, Geneva, Tahoma, sans-serif !default;
+$font-title: 'Times New Roman', Times, serif;
+$font-sizes: (
+  normal: 15pt,
+  large: 30pt,
+);
+$font-styles: (
+  normal: normal,
+  italic: italic,
+);
+$font-weights: (
+  normail: normal,
+  bold: bold,
+);
+$line-heights: (
+  title: 50px,
+);
+
+// Texts
+$text-aligns: left, center, right !default;
+$center-align: nth($text-aligns, 2);
+
+// Display types
+$displays: none, inline, inline-block, block, flex, inline-flex !default;
+
+// Flex justification
+$flex-directions: (
+  row,
+  column,
+  row-reverse,
+  column-reverse) !default;
+
+$justify-content-values: (
+  start: flex-start,
+  center: center,
+  end: flex-end,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly) !default;
+
+// Border
+$border-1-solid: $px-1 map-get($line-types, solid
+);
+$border-2-solid: $px-2 map-get($line-types, solid);
+
+$border-styles: (
+  thin: $border-1-solid,
+  normal: $border-2-solid
+);
+
+// Specific Selector
+$base-width: 1280px !default;
+$base-height: 720px !default;
+
+$base-bg-color: rgb(50, 50, 50) !default;
+
+$title-box-width: 280px !default;
+$title-box-height: map-get($rel-size, "100%");
+
+$title-up-box-width: map-get($rel-size, "100%");
+$title-up-box-height: 300px;
+
+$title-down-box-width: map-get($rel-size, "100%");
