@@ -1,13 +1,26 @@
-// Numbers
-$zero: 0 !default;
+// literals
+$zero: 0;
+$digits: 1, 2, 3, 4, 5, 6, 7, 8, 9;
+$none_string: '';
+$dirs: top, right, bottom, left;
+$dirs-v: (
+  top: '-top',
+  right: '-right',
+  bottom: '-bottom',
+  left: '-left',
+);
 
 // Size Configuration
 $px-0: 0px;
 $px-1: 1px;
 $px-2: 2px;
+$px-5: 5px;
+$px-10: calc($px-1 * 10);
 
 $rel-size: (
   "0%": 0%,
+  "10%": 10%,
+  "20%": 20%,
   "25%": 25%,
   "50%": 50%,
   "75%": 75%,
@@ -17,9 +30,7 @@ $rel-size: (
 // Colors
 $black: #000000;
 $light-gray: #d3d3d3;
-
-// Spaces
-.m-0 { margin: 0px }
+$opacities: 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1;
 
 // Lines
 $line-types: (
@@ -27,9 +38,10 @@ $line-types: (
 );
 
 // Fonts
-$font-default: Verdana, Geneva, Tahoma, sans-serif !default;
+$font-default: Verdana, Geneva, Tahoma, sans-serif;
 $font-title: 'Times New Roman', Times, serif;
 $font-sizes: (
+  small: 10pt,
   normal: 15pt,
   large: 30pt,
 );
@@ -42,22 +54,37 @@ $font-weights: (
   bold: bold,
 );
 $line-heights: (
+  footer: 16px,
   title: 50px,
 );
 
 // Texts
-$text-aligns: left, center, right !default;
+$text-aligns: left, center, right;
 $center-align: nth($text-aligns, 2);
 
 // Display types
-$displays: none, inline, inline-block, block, flex, inline-flex !default;
+$displays: none, inline, inline-block, block, flex, inline-flex;
+
+// Position
+$pos-types: (
+  static: static,
+  relative: relative,
+  absolute: absolute,
+  fixed: fixed,
+);
+
+// Transforms
+$tf-origin: left, right;
+$scaleX-0: scaleX(#{$zero});
+$scale-120: scale(calc(map-get($rel-size, "100%") + map-get($rel-size, "20%")));
 
 // Flex justification
 $flex-directions: (
   row,
   column,
   row-reverse,
-  column-reverse) !default;
+  column-reverse
+);
 
 $justify-content-values: (
   start: flex-start,
@@ -65,11 +92,11 @@ $justify-content-values: (
   end: flex-end,
   between: space-between,
   around: space-around,
-  evenly: space-evenly) !default;
+  evenly: space-evenly
+);
 
 // Border
-$border-1-solid: $px-1 map-get($line-types, solid
-);
+$border-1-solid: $px-1 map-get($line-types, solid);
 $border-2-solid: $px-2 map-get($line-types, solid);
 
 $border-styles: (
@@ -77,16 +104,36 @@ $border-styles: (
   normal: $border-2-solid
 );
 
+$border-thickness: (
+  thin: 1px,
+  nomal: 2px,
+);
+
+// URLs
+$article-bg-image-url: "/img/back.png";
+
 // Specific Selector
-$base-width: 1280px !default;
-$base-height: 720px !default;
+$base-width: 1280px;
+$base-height: 720px;
 
-$base-bg-color: rgb(50, 50, 50) !default;
+$base-bg-color: rgb(50, 50, 50);
 
-$title-box-width: 280px !default;
+$title-box-width: 280px;
 $title-box-height: map-get($rel-size, "100%");
 
 $title-up-box-width: map-get($rel-size, "100%");
 $title-up-box-height: 300px;
 
 $title-down-box-width: map-get($rel-size, "100%");
+
+$contents-box-width: calc($base-width - $title-box-width);
+$contents-box-height: map-get($rel-size, "100%");
+
+$nav-box-width: map-get($rel-size, "100%");
+$nav-box-height: 120px;
+
+$section-box-width: map-get($rel-size, "100%");
+$section-box-height: calc($contents-box-height - $nav-box-height);
+
+$article-box-width: calc($section-box-width / 4);
+$article-box-height: map-get($rel-size, "100%");

@@ -25,16 +25,48 @@
 }
 
 // mixin modules
-@mixin border-right($size: normal, $color: $black) {
-  border-right: map-get($border-styles, $size) $color;
+@mixin border($size: normal, $type: solid, $color: $black) {
+  border: map-get($border-thickness, $size) $type $color;
+}
+
+@mixin border-dir($dir: null, $size: normal, $type: solid, $color: $black) {
+  border-#{$dir}: map-get($border-thickness, $size) $type $color;
 }
 
 @mixin font($size: normal, $weight: normal, $style: normal) {
-  font-size: $size;
-  font-weight: $weight;
-  font-style: $style;
+  font-size: map-get($font-sizes, $size);
+  font-weight: map-get($font-weights, $weight);
+  font-style: map-get($font-styles, $style);
   @content;
 }
+
+@mixin same-dimensions-toParent {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin transition-setting($property: null, $duration: 0.5s, $t-function: ease, $delay: 0s) {
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-timing-function: $t-function;
+  transition-delay: $delay;
+  @content;
+}
+
+@mixin transform($values) {
+  transform: $values;
+}
+
+@mixin spacing($type: margin, $dir: null, $props...) {
+  $inserted-props: '';
+
+  @each $prop in $props {
+    $inserted-props: $inserted-props + $prop + ' ';
+  }
+
+  #{$type}#{$dir}: unquote($inserted-props);
+}
+
 
 // Specific mixins
 @mixin base-dimensions {
@@ -56,6 +88,26 @@
   height: $title-up-box-height;
 }
 
+@mixin contents-box-dimensions {
+  width: $contents-box-width;
+  height: $contents-box-height;
+}
+
+@mixin nav-box-dimensions {
+  width: $nav-box-width;
+  height: $nav-box-height;
+}
+
+@mixin section-box-dimensions {
+  width: $section-box-width;
+  height: $section-box-height;
+}
+
+@mixin article-box-dimensions {
+  width: $article-box-width;
+  height: $article-box-height;
+}
+
 // Combinators 
 @mixin generate-base {
   #base {
@@ -69,9 +121,10 @@
   .title_box {
     @include title-box-dimensions;
     @extend .flex-column;
-    @include border-right(normal, lightgray);
+    @include border-dir($dir: right, $size: normal, $color: lightgray);
 
     @include generate-title_up_box;
+    @include generate-title_down_box;
   }
 }
 
@@ -95,11 +148,112 @@
 
 @mixin generate-title_down_box {
   .title_down_box {
-    width: $title-box-width;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 10pt;
-    line-height: 16px;
-    color: lightgray;
+    width: $title-down-box-width;
+    text-align: $center-align;
+    @include spacing(margin, map-get($dirs-v, bottom), calc($px-10 * 2));
+
+    @include font(small) {
+      line-height: map-get($line-heights, footer);
+      color: $light-gray;
+    }
+  }
+}
+
+@mixin generate-contents_box {
+  .contents_box {
+    @include contents-box-dimensions;
+    @extend .flex-column;
+
+    @include generate-nav_box;
+    @include generate-section_box;
+  }
+}
+
+@mixin generate-nav_box {
+  .nav_box {
+    @include nav-box-dimensions;
+    @include border-dir($dir: bottom, $size: normal, $color: lightgray);
+    position: map-get($pos-types, relative);
+
+    img {
+      width: calc($px-10 * 3);
+      position: map-get($pos-types, absolute);
+      bottom: $px-10;
+      right: $px-10;
+    }
+  }
+}
+
+@mixin generate-section_box {
+  .section_box {
+    @include section-box-dimensions;
+    @extend .d-flex;
+
+    @include generate-article_box;
+  }
+}
+
+@mixin generate-article_box {
+  .article_box {
+    @include article-box-dimensions;
+    opacity: nth($opacities, 5); // 0.4
+    background-image: url(#{$article-bg-image-url});
+
+    @include generate-inner_article_box;
+    @include generate-mask($isWithImage: true);
+  }
+}
+
+@mixin generate-inner_article_box {
+  .inner_article_box {
+    @include same-dimensions-toParent;
+    @extend .flex-column;
+    float: nth($dirs, 4); // left
+    position: map-get($pos-types, relative);
+    z-index: calc(nth($digits, 1) * 10);
+    @include spacing(padding, null, calc($px-10 * 7), calc($px-10 * 4));
+
+    .text_box {
+      color: $light-gray;
+
+      * {
+        @include spacing(margin, map-get($dirs-v, bottom), calc($px-10 + $px-5));
+      }
+    }
+
+    img {
+      @include transition-setting($duration: 0.5s) {
+        transform-origin: nth($dirs, 3) nth($dirs, 4);
+      }
+      width: map-get($rel-size, "100%");
+      display: nth($displays, 4); // block
+    }
+  }
+}
+
+@mixin generate-mask($isWithImage: false) {
+  &::after {
+    @include same-dimensions-toParent;
+    display: nth($displays, 4); // block
+    content: $none_string;
+    background-color: $base-bg-color;
+
+    @include transition-setting(transform, 0.5s, ease) {
+      transform-origin: nth($tf-origin, 2); // right
+    }
+  }
+
+  &:hover {
+    opacity: nth($opacities, 11); // 1
+
+    &::after {
+      @include transform($scaleX-0);
+    }
+
+    @if ($isWithImage) {
+      img {
+        @include transform($scale-120);
+      }
+    }
   }
 }
