@@ -27,8 +27,13 @@ $rel-size: (
   "100%": 100%
 );
 
+$full-screen-width: 100vw;
+$full-screen-height: 100vh;
+
 // Colors
 $black: #000000;
+$white: #FFFFFF;
+$orange: #ffa500;
 $light-gray: #d3d3d3;
 $opacities: 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1;
 
@@ -64,6 +69,7 @@ $center-align: nth($text-aligns, 2);
 
 // Display types
 $displays: none, inline, inline-block, block, flex, inline-flex;
+$overflow-types: hidden, scroll, visible;
 
 // Position
 $pos-types: (
@@ -77,6 +83,7 @@ $pos-types: (
 $tf-origin: left, right;
 $scaleX-0: scaleX(#{$zero});
 $scale-120: scale(calc(map-get($rel-size, "100%") + map-get($rel-size, "20%")));
+$skewX-12: skewX(-12deg) skewX(12deg); 
 
 // Flex justification
 $flex-directions: (
@@ -117,6 +124,7 @@ $base-width: 1280px;
 $base-height: 720px;
 
 $base-bg-color: rgb(50, 50, 50);
+$character-bg-color: rgb(205, 232, 255);
 
 $title-box-width: 280px;
 $title-box-height: map-get($rel-size, "100%");
@@ -137,3 +145,12 @@ $section-box-height: calc($contents-box-height - $nav-box-height);
 
 $article-box-width: calc($section-box-width / 4);
 $article-box-height: map-get($rel-size, "100%");
+
+$character-item-size: 100px;
+
+$line-box-width: map-get($rel-size, "100%");
+$line-box-height: $character-item-size;
+
+$character-main-width: map-get($rel-size, "100%");
+$character-main-height: calc($line-box-height * 6);
+

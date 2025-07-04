@@ -2,3 +2,4 @@
 @import "../abstracts/mixins";
 
 @include generate-display-utilities();
+@include generate-full-screen;

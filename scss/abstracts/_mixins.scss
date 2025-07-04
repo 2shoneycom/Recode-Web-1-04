@@ -24,13 +24,22 @@
   }
 }
 
+@mixin generate-full-screen {
+  .full-screen {
+    width: $full-screen-width;
+    height: $full-screen-height;
+  }
+}
+
 // mixin modules
 @mixin border($size: normal, $type: solid, $color: $black) {
   border: map-get($border-thickness, $size) $type $color;
+  @content;
 }
 
 @mixin border-dir($dir: null, $size: normal, $type: solid, $color: $black) {
   border-#{$dir}: map-get($border-thickness, $size) $type $color;
+  @content;
 }
 
 @mixin font($size: normal, $weight: normal, $style: normal) {
@@ -53,8 +62,24 @@
   @content;
 }
 
-@mixin transform($values) {
-  transform: $values;
+@mixin transition-all-in-one($values...) {
+  transition: $values;
+}
+
+@mixin transform($values...) {
+  $inserted-value: '';
+
+  @each $value in $values {
+    @if (index($values, $value) !=1) {
+      $inserted-value: $inserted-value + ' ' + $value;
+    }
+
+    @else {
+      $inserted-value: $value;
+    }
+  }
+
+  transform: $inserted-value;
 }
 
 @mixin spacing($type: margin, $dir: null, $props...) {
@@ -65,6 +90,11 @@
   }
 
   #{$type}#{$dir}: unquote($inserted-props);
+}
+
+@mixin set-z-index($position: relative, $z-value: 0) {
+  position: $position;
+  z-index: $z-value;
 }
 
 
@@ -106,6 +136,21 @@
 @mixin article-box-dimensions {
   width: $article-box-width;
   height: $article-box-height;
+}
+
+@mixin character-main-dimensions {
+  width: $character-main-width;
+  height: $character-main-height;
+}
+
+@mixin line-box-dimensions {
+  width: $line-box-width;
+  height: $line-box-height;
+}
+
+@mixin character-item-dimensions {
+  width: $character-item-size;
+  height: $character-item-size;
 }
 
 // Combinators 
@@ -209,8 +254,7 @@
     @include same-dimensions-toParent;
     @extend .flex-column;
     float: nth($dirs, 4); // left
-    position: map-get($pos-types, relative);
-    z-index: calc(nth($digits, 1) * 10);
+    @include set-z-index(map-get($pos-types, relative), calc(nth($digits, 1) * 10));
     @include spacing(padding, null, calc($px-10 * 7), calc($px-10 * 4));
 
     .text_box {
@@ -225,6 +269,7 @@
       @include transition-setting($duration: 0.5s) {
         transform-origin: nth($dirs, 3) nth($dirs, 4);
       }
+
       width: map-get($rel-size, "100%");
       display: nth($displays, 4); // block
     }
@@ -255,5 +300,69 @@
         @include transform($scale-120);
       }
     }
+  }
+}
+
+@mixin generate-bg-color-cde8ff {
+  .bg-color-cde8ff {
+    @include same-dimensions-toParent;
+    background-color: $character-bg-color;
+    @include set-z-index(map-get($pos-types, fixed), $zero);
+    top: $zero;
+    left: $zero;
+  }
+}
+
+@mixin generate-character_main {
+  #main {
+    @include character-main-dimensions;
+    @include set-z-index(map-get($pos-types, relative), calc(nth($digits, 1) * 10));
+  }
+}
+
+@mixin generate-line_box {
+  .line_box {
+    @include line-box-dimensions;
+    @include spacing(margin, map-get($dirs-v, bottom), $px-10);
+    @extend .d-flex;
+  }
+}
+
+@mixin generate-character-item {
+  $transition-1: (transform 0.1s ease);
+  $transition-2: (background-color 0.5s);
+
+  .item {
+    @include character-item-dimensions;
+    @include spacing(margin, null, $zero, $px-5);
+
+    @include border(calc($px-5 - $px-1), map-get($line-types, solid), $white) {
+      border-radius: $px-10;
+    }
+
+    background-color: $light-gray;
+    @include transform(nth($skewX-12, 1));
+    @include transition-all-in-one($transition-1, $transition-2);
+    overflow: nth($overflow-types, 1); // hidden
+
+    @include generate-item-hover;
+    @include generate-item-img;
+  }
+}
+
+@mixin generate-item-hover {
+  &:hover {
+    @include transform(nth($skewX-12, 1), $scale-120);
+    background-color: $orange;
+  }
+}
+
+@mixin generate-item-img {
+  img {
+    display: nth($displays, 4); // block
+    @include same-dimensions-toParent;
+
+    transform: nth($skewX-12, 2);
+    object-fit: cover;
   }
 }

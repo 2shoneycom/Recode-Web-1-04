@@ -1,0 +1,6 @@
+@import "../abstracts/mixins";
+
+@include generate-bg-color-cde8ff;
+@include generate-character_main;
+@include generate-line_box;
+@include generate-character-item;
