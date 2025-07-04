@@ -19,7 +19,11 @@
 @mixin generate-justify-content-utilities {
   @each $key, $val in $justify-content-values {
     .justify-content-#{$key} {
-      justify-content: $val !important;
+      @if ($key == center) {
+        justify-content: safe $val !important;
+      } @else {
+        justify-content: $val !important;
+      }
     }
   }
 }
@@ -102,6 +106,8 @@
 @mixin base-dimensions {
   width: $base-width;
   height: $base-height;
+  min-width: $base-min-width;
+  min-height: $base-min-height;
 }
 
 @mixin base-bg {
@@ -141,6 +147,7 @@
 @mixin character-main-dimensions {
   width: $character-main-width;
   height: $character-main-height;
+  min-width: $character-main-min-width;
 }
 
 @mixin line-box-dimensions {

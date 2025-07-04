@@ -120,11 +120,13 @@ $border-thickness: (
 $article-bg-image-url: "/img/back.png";
 
 // Specific Selector
-$base-width: 1280px;
-$base-height: 720px;
+$base-width: min(95vw, 1280px);
+$base-height: min(95vh, 720px);
+$base-min-width: 1100px;
+$base-min-height: 600px;
 
-$base-bg-color: rgb(50, 50, 50);
-$character-bg-color: rgb(205, 232, 255);
+$base-bg-color: #323232;
+$character-bg-color: #cde8ff;
 
 $title-box-width: 280px;
 $title-box-height: map-get($rel-size, "100%");
@@ -134,7 +136,7 @@ $title-up-box-height: 300px;
 
 $title-down-box-width: map-get($rel-size, "100%");
 
-$contents-box-width: calc($base-width - $title-box-width);
+$contents-box-width: calc(max($base-width, $base-min-width) - $title-box-width);
 $contents-box-height: map-get($rel-size, "100%");
 
 $nav-box-width: map-get($rel-size, "100%");
@@ -153,4 +155,5 @@ $line-box-height: $character-item-size;
 
 $character-main-width: map-get($rel-size, "100%");
 $character-main-height: calc($line-box-height * 6);
+$character-main-min-width: 600px;
 
